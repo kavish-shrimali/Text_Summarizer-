@@ -1,0 +1,48 @@
+import os
+from pathlib import Path
+import logging
+
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
+
+
+project_name = "textSummarizer" # it will contain all the containers
+
+list_of_files = [
+    ".github/workflows/.gitkeep",
+    f"src/{project_name}/__init__.py",#whenver the interpreter sees the __init__.py file then it consider it as a local package
+    f"src/{project_name}/copmponents/__init__.py", # will contains all the python code components
+    f"src/{project_name}/utils/__init__.py" , # contains all the utility related codes
+    f"src/{project_name}/utils/common.py",  # write all the loggers inside it
+    f"src/{project_name}/logging/__init__.py",  # used to write logs
+    f"src/{project_name}/config/__init__.py",
+    f"src/{project_name}/config/configuration.py",
+    f"src/{project_name}/pipeline.py/__init__.py",
+    f"src/{project_name}/entity.py/__init__.py",
+    f"src/{project_name}/constants.py/__init__.py", # pipeline , constan , entity are all folder which contains the constructers as __init__.py in themselves
+    "config/config.yaml",
+    "params.yaml",
+    "app.py",
+    "main.py",
+    "Docker",
+    "Dockerfile",
+    "requirements.txt",
+    "setup.py",
+    "research/trails.ipynb"  
+]
+
+for filepath in list_of_files:
+    filepath = Path(filepath) # this will create the above written filepaths
+    filedir , filename = os.path.split(filepath) # returns the output in this form ('config', 'config.yaml')
+    
+    if filedir != "": # if the filepath is not empty then we execute this piecce of code 
+        os.makedirs(filedir , exist_ok = True)
+        logging.info(f"Creating directory:{filedir} for the file {filename}")
+
+    if (not os.path.exists(filepath)) or (os.path.getsize(filepath) == 0): # condition of an empty file and if the file is empty then this will not executed
+        with open(filepath,'w') as f:
+            logging.info(f"creating empty file: {filepath}")
+            
+    else :
+        logging.info(f"{filename} is already exist")
+        
+ 
